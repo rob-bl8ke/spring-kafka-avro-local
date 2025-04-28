@@ -45,6 +45,8 @@ The goal is to find a way to set up an environment that is for local development
 - Eliminate the dependency on an AWS Glue Schema Registry
 - Eliminate the dependency on a cloud-based Kafka service
 
+### Docker compose
+
 This can be done using `docker-compose.yml` which spins up two containerized services: one for an Avro compatible schema registry (Confluent Schema Registry + Avro serializer) and one for a local Kafka service instance.
 
 One must configure Kafka to use a serializer that knows how to serialize Avro objects — specifically the `SomethingHappened` generated class.
@@ -67,6 +69,8 @@ The KafkaAvroSerializer will:
 
 You can fully debug your Spring Boot Kafka production locally this way.
 
+### Additional dependency management
+
 Some additional dependencies are required by the the client `app-main`, and these are found in the `pom.xml` file with a group Id of `io.confluent`. Note too, that you have to reach out to the confluent repository to fetch these dependenceis so that repository also needs to be declared in the `pom.xml` file. Without this, Maven will only ever check Maven Central. 
 
 Check your dependencies for conflicts:
@@ -76,6 +80,8 @@ mvn dependency:tree
 # or
 mvn dependency:tree -Dverbose -Dincludes=commons-logging
 ```
+
+Unfortunately, at this time the only way to get around dependency conflicts with the kafka-core library, one must make use of the `dependencyManagement` tags in order to skirt around the issue.
 
 ### Changes in Config
 
