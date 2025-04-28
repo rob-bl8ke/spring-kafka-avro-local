@@ -1,0 +1,172 @@
+{
+    "type": "record",
+    "namespace": "com.example.app.dto.events",
+    "name": "SomethingHappened",
+    "version": "1",
+    "fields": [
+      {
+      "name": "header",
+      "type": {
+        "type": "record",
+        "name": "Header",
+        "fields": [
+          {
+            "name": "eventId",
+            "type": "string",
+            "doc": "Unique event identifier (UUID)"
+          },
+          {
+            "name": "eventType",
+            "type": "string",
+            "doc": "Describes nature of event eg. OfferCreated, OfferUploaded, ApplicationStarted"
+          },
+          {
+            "name": "timestamp",
+            "type": {
+              "type": "long",
+              "logicalType": "timestamp-millis"
+            },
+            "doc": "Timestamp of event in milliseconds"
+          },
+          {
+            "name": "aggregatedType",
+            "type": [
+              "string",
+              "null"
+            ],
+            "doc": "Type of aggregate eg Where's it going?"
+          },
+          {
+            "name": "aggregatedId",
+            "type": [
+              "string",
+              "null"
+            ],
+            "doc": "ID of aggregated root that generated the event eg objecting_123"
+          },
+          {
+            "name": "correlationId",
+            "type": "string",
+            "doc": "Links related events in distributed transaction"
+          },
+          {
+            "name": "causationId",
+            "type": [
+              "string",
+              "null"
+            ],
+            "doc": "Identifies the event that triggered this event eg event_567"
+          },
+          {
+            "name": "sourceId",
+            "type": "string",
+            "doc": "The service or component that produced the event"
+          },
+          {
+            "name": "eventVersion",
+            "type": "string",
+            "doc": "Version number for schema evolution"
+          },
+          {
+            "name": "schemaId",
+            "type": "string",
+            "doc": "Reference to the event schema"
+          },
+          {
+            "name": "tenantId",
+            "type": [
+              "string",
+              "null"
+            ],
+            "doc": "For multi-tenancy eg Country code"
+          },
+          {
+            "name": "securityContext",
+            "type": [
+              "string",
+              "null"
+            ],
+            "doc": "ACL in use"
+          },
+          {
+            "name": "contentType",
+            "type": [
+              "string",
+              "null"
+            ],
+            "doc": "Data format eg application/json",
+            "default": "application/avro"
+          },
+          {
+            "name": "encoding",
+            "type": [
+              "string",
+              "null"
+            ],
+            "doc": "Character encoding eg UTF-8",
+            "default": "UTF-8"
+          },
+          {
+            "name": "priority",
+            "type": [
+              "string",
+              "null"
+            ],
+            "doc": "Processing urgency eg high, low"
+          },
+          {
+            "name": "retryCount",
+            "type": [
+              "string",
+              "null"
+            ],
+            "doc": "Number of delivery attempts"
+          },
+          {
+            "name": "checksumHash",
+            "type": [
+              "string",
+              "null"
+            ],
+            "doc": "Ensures payload integrity eg SHA-256"
+          },
+          {
+            "name": "domain",
+            "type": [
+              "string",
+              "null"
+            ],
+            "doc": "The domain that the event belongs to eg WhatzitDomain",
+            "default": "WhatzitDomain"
+          },
+          {
+            "name": "businessUnit",
+            "type": "string",
+            "doc": "Business owner responsible for service/events"
+          },
+          {
+            "name": "metadata",
+            "type": {
+              "type": "map",
+              "values": "string"
+            },
+            "doc": "Key value pairs for filtering eg `{environment: production}`"
+          }
+        ]
+      }},
+      {
+        "name": "body",
+        "type": {
+          "type": "record",
+          "name": "SomethingHappenedBody",
+          "fields": [
+            {
+              "name": "applicationId",
+              "type": "string",
+              "doc": "Application Identifier"
+            }
+          ]
+        }
+      }
+    ]
+  }
