@@ -15,16 +15,6 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.example</groupId>
-            <artifactId>domain-logic</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.example</groupId>
-            <artifactId>shared-utils</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
             <groupId>com.cyg</groupId>
             <artifactId>kafka-core</artifactId>
             <version>1.0.5</version>

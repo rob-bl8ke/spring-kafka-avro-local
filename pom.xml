@@ -8,8 +8,6 @@
     <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
-        <module>domain-logic</module>
-        <module>shared-utils</module>
         <module>app-main</module>
         <module>kafka-core</module>
     </modules>
