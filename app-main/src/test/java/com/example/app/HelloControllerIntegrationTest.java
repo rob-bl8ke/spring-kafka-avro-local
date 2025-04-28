@@ -10,6 +10,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.cyg.kafkacore.HelloWorldService;
+import com.example.app.kafka.ClientProducer;
 
 import static org.mockito.BDDMockito.given;
 
@@ -21,6 +22,9 @@ class HelloControllerIntegrationTest {
 
     @MockitoBean
     private HelloWorldService helloWorldService;
+
+    @MockitoBean
+    private ClientProducer clientProducer;
 
     @Test
     void testHelloEndpoint() throws Exception {

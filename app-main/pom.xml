@@ -89,7 +89,7 @@
             <artifactId>avro</artifactId>
         </dependency>
 
-        <!-- <dependency>
+        <dependency>
             <groupId>io.confluent</groupId>
             <artifactId>kafka-schema-registry-client</artifactId>
             <version>7.5.0</version>
@@ -99,7 +99,7 @@
             <groupId>io.confluent</groupId>
             <artifactId>kafka-avro-serializer</artifactId>
             <version>7.5.0</version>
-        </dependency> -->
+        </dependency>
     </dependencies>
 
     <build>
