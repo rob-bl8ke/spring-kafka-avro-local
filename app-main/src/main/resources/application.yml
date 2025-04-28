@@ -6,6 +6,22 @@ spring:
     name: app-main
   kafka:
     bootstrap-servers: localhost:9092
+    producer:
+      keySerializer: org.apache.kafka.common.serialization.StringSerializer
+      valueSerializer: org.apache.kafka.common.serialization.StringSerializer
+
+kafka:
+  producer:
+    enabled: true
+  context-topic:
+    name: context-topic
+    partitions: 1
+    replicas: 1
+  producers:
+    something-happened:
+      topic: context-topic
+      event-type: SomethingHappened
+      schema-id: com_cyg_something_happened
 
 executor:
   max:
