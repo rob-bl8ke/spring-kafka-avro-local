@@ -1,0 +1,13 @@
+server:
+  port: 8090
+
+spring:
+  application:
+    name: app-main
+  kafka:
+    bootstrap-servers: localhost:9092
+
+executor:
+  max:
+    queue:
+      size: 1000
