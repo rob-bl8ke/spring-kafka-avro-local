@@ -3,7 +3,8 @@ package com.example.app;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication(scanBasePackages = "com.example")
+@SpringBootApplication(scanBasePackages = {"com.example.app", 
+    "com.cyg.kafkacore"})
 public class Application {
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
