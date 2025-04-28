@@ -7,8 +7,9 @@ docker compose up
 
 ```bash
 mvn clean install
-mvn -pl app-main spring-boot:run
 ```
+Run your application using the `local` profile to avoid external dependencies.
+
 Once `docker compose up` is run, use `curl http://localhost:8091/subjects
 ` to make sure that your schema registry is reachable. If no schemas are registered, it will return an empty array. Otheriwse it will return something like this: `["context-topic-value"]`.
 
