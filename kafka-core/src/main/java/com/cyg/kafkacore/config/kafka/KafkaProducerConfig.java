@@ -20,11 +20,20 @@ public class KafkaProducerConfig {
 
     private final Config config;
 
-    @Value("${spring.kafka.producer.keySerializer}")
-    private String keySerializer;
+    // @Value("${spring.kafka.producer.keySerializer}")
+    // private String keySerializer;
 
-    @Value("${spring.kafka.producer.valueSerializer}")
-    private String valueSerializer;
+    // @Value("${spring.kafka.producer.valueSerializer}")
+    // private String valueSerializer;
+
+    @Value("${spring.kafka.producer.key-serializer}")
+    private Class<?> keySerializer;
+
+    @Value("${spring.kafka.producer.value-serializer}")
+    private Class<?> valueSerializer;
+
+    @Value("${spring.kafka.properties.schema-registry-url}")
+    private String schemaRegistryUrl;
 
     @Autowired
     public KafkaProducerConfig(Config config) {
@@ -37,6 +46,8 @@ public class KafkaProducerConfig {
         configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, config.getBootstrapServers());
         configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, keySerializer);
         configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, valueSerializer);
+
+        configProps.put("schema.registry.url", schemaRegistryUrl);
 
         return new DefaultKafkaProducerFactory<>(configProps);
     }

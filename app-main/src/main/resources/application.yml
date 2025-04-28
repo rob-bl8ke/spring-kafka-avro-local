@@ -8,7 +8,9 @@ spring:
     bootstrap-servers: localhost:9092
     producer:
       keySerializer: org.apache.kafka.common.serialization.StringSerializer
-      valueSerializer: org.apache.kafka.common.serialization.StringSerializer
+      valueSerializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+    properties:
+      schema-registry-url: http://localhost:8091
 
 kafka:
   producer:

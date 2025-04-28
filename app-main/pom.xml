@@ -1,31 +1,81 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         
     <modelVersion>4.0.0</modelVersion>
+
     <parent>
         <groupId>com.example</groupId>
         <artifactId>spring-boot-multimodule-quickstart</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
+
     <artifactId>app-main</artifactId>
+
+    <repositories>
+        <repository>
+            <id>confluent</id>
+            <url>https://packages.confluent.io/maven/</url>
+        </repository>
+    </repositories>
+
+    <!-- Dependency management to control versions -->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.apache.avro</groupId>
+                <artifactId>avro</artifactId>
+                <version>1.11.4</version> <!-- Upgrade to align with kafka-core conflicts -->
+            </dependency>
+
+            <dependency>
+                <groupId>commons-logging</groupId>
+                <artifactId>commons-logging</artifactId>
+                <version>1.2</version> <!-- Latest stable -->
+            </dependency>
+
+            <dependency>
+                <groupId>org.jetbrains</groupId>
+                <artifactId>annotations</artifactId>
+                <version>23.0.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.squareup.okio</groupId>
+                <artifactId>okio</artifactId>
+                <version>3.4.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.google.protobuf</groupId>
+                <artifactId>protobuf-java</artifactId>
+                <version>3.25.5</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
+        <!-- Core Spring Boot Web -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+
+        <!-- Your internal Kafka-core module -->
         <dependency>
             <groupId>com.cyg</groupId>
             <artifactId>kafka-core</artifactId>
             <version>1.0.5</version>
         </dependency>
+
+        <!-- Spring Boot Test support -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
 
-        <!-- Lombok for code generation -->
+        <!-- Lombok for cleaner Java code -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -33,29 +83,40 @@
             <optional>true</optional>
         </dependency>
 
-        <!-- Avro (Kafka message generation) -->
+        <!-- Avro, Kafka Schema Registry Client, and Avro Serializer -->
         <dependency>
             <groupId>org.apache.avro</groupId>
             <artifactId>avro</artifactId>
-            <version>1.11.1</version>
         </dependency>
 
+        <!-- <dependency>
+            <groupId>io.confluent</groupId>
+            <artifactId>kafka-schema-registry-client</artifactId>
+            <version>7.5.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.confluent</groupId>
+            <artifactId>kafka-avro-serializer</artifactId>
+            <version>7.5.0</version>
+        </dependency> -->
     </dependencies>
+
     <build>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
-            
-            <!-- Compiler plugin to handle annotation processing for Lombok -->
+
+            <!-- Compiler plugin (handles lombok annotation processing) -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.11.0</version> <!-- Use the latest version -->
+                <version>3.11.0</version>
                 <configuration>
-                    <source>17</source> <!-- Replace with your Java version -->
-                    <target>17</target> <!-- Replace with your Java version -->
+                    <source>17</source>
+                    <target>17</target>
                     <compilerArgs>
                         <arg>-parameters</arg>
                     </compilerArgs>
@@ -69,11 +130,11 @@
                 </configuration>
             </plugin>
 
-            <!-- Kafka-core client requires this plugin -->
+            <!-- Avro plugin to generate Java classes from Avro schema files -->
             <plugin>
                 <groupId>org.apache.avro</groupId>
                 <artifactId>avro-maven-plugin</artifactId>
-                <version>1.11.1</version>
+                <version>1.11.4</version> <!-- align to the dependencyManagement version -->
                 <executions>
                     <execution>
                         <goals>
