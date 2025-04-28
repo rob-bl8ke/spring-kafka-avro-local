@@ -1,6 +1,6 @@
 package com.example.app.kafka;
 
-import com.cyg.kafkacore.config.kafka.KafkaProducerConfig;
+import com.cyg.kafkacore.config.kafka.KafkaProducerConfigInterface;
 import com.cyg.kafkacore.core.KafkaProducer;
 import com.example.app.dto.events.Header;
 import com.example.app.dto.events.SomethingHappened;
@@ -30,7 +30,7 @@ public class ClientProducer extends KafkaProducer<SomethingHappened> {
 
     private String sourceId = "kafka-core-spike";
 
-    public ClientProducer(KafkaProducerConfig config, @Value("${kafka.context-topic.name}") String schemaName) {
+    public ClientProducer(KafkaProducerConfigInterface config, @Value("${kafka.context-topic.name}") String schemaName) {
         super(config, schemaName);
     }
 

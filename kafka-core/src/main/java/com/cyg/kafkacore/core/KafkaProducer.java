@@ -1,6 +1,6 @@
 package com.cyg.kafkacore.core;
 
-import com.cyg.kafkacore.config.kafka.KafkaProducerConfig;
+import com.cyg.kafkacore.config.kafka.KafkaProducerConfigInterface;
 import java.util.concurrent.CompletableFuture;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +14,7 @@ public abstract class KafkaProducer<T extends SpecificRecordBase> {
 
     private KafkaTemplate<String, Object> kafkaTemplate;
 
-    protected KafkaProducer(KafkaProducerConfig config, String schemaName) {
+    protected KafkaProducer(KafkaProducerConfigInterface config, String schemaName) {
         kafkaTemplate = config.createKafkaTemplate(schemaName);
     }
 
