@@ -108,7 +108,31 @@ However, this shouldn't be a problem since the final solution relies on swapping
 
 The alternative is to keep it String and manually `Class.forName()` in your config code later. A consideration if the current change is not desirable.
 
-### Mockoon
+## AKHQ for UI
+
+[AKHQ (Kafka HQ)](https://github.com/tchiotludo/akhq) is a lightweight UI for Kafka — very easy to add to Docker Compose. After you docker-compose up again, open: `http://localhost:8080`
+
+You’ll see:
+
+- Cluster name: my-cluster
+- A list of topics
+- Option to browse messages
+- View consumer groups, etc.
+
+To access AKHQ on another port or path based on your port mapping and `context-path`.
+See below:
+
+```yaml
+  akhq:
+    image: tchiotludo/akhq:latest
+    ...
+    ports:
+      - "9090:8080"  # <--- Change left side (host) port
+    ...
+```
+Inside the container, AKHQ still listens on port 8080. Outside the container, you’ll access it via http://localhost:9090.
+
+## Mockoon
 
 ```bash
 docker compose up -d
