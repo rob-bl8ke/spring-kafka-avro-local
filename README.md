@@ -8,7 +8,13 @@ docker compose up
 ```bash
 mvn clean install
 ```
-Run your application using the `local` profile to avoid external dependencies.
+Run your application using the `local` profile to avoid external dependencies. In VS Code this is done using the following `launch.json` content:
+
+```json
+  "env": {
+      "SPRING_PROFILES_ACTIVE": "local"
+  }
+```
 
 Once `docker compose up` is run, use `curl http://localhost:8091/subjects
 ` to make sure that your schema registry is reachable. If no schemas are registered, it will return an empty array. Otheriwse it will return something like this: `["context-topic-value"]`.
@@ -38,6 +44,22 @@ kafka-console-consumer --bootstrap-server kafka:29092 --topic context-topic --fr
 ```
 
 Run your application, and hit the endpoint: `curl GET http://localhost:8090/hello`. You should see the message coming through.
+
+### Useful URLs
+
+- http://localhost:8091 → Schema Registry API
+- http://localhost:8080 → AKHQ UI
+
+### Register a simple Avro Schema
+
+You can register a schema via HTTP POST to Schema Registry. Create a file called user-schema.json (see file) and run 
+
+```bash
+curl -X POST http://localhost:8091/subjects/user-value/versions \
+  -H "Content-Type: application/vnd.schemaregistry.v1+json" \
+  -d @user-schema.json
+```
+If successful, you’ll get something like `{"id":1}`. Then try `curl http://localhost:8091/subjects` which should return `["user-value"]`.
 
 ## Overview
 
