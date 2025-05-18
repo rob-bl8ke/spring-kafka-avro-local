@@ -116,6 +116,87 @@ curl http://localhost:3001/hello
 # → {"message":"Hello from Mockoon!"}
 ```
 
+#### Handle multiple files
+
+Using the following approach to create multiple files to better organise your mockoon endpoints:
+```
+.
+├─ docker-compose.yml
+└─ mockoon/
+   ├─ customers.json      # port 3001
+   ├─ inventory.json      # port 3002
+   └─ payments.json       # port 3003
+
+```
+
+If each file has a different port, one can expose those ports. Also, simply using `/data` as the data folder will load all the `.json` files in that folder.
+
+```yaml
+services:
+  mockoon:
+    image: mockoon/cli:latest
+    container_name: mockoon
+    volumes:
+      # mount the whole folder read-only
+      - ./mockoon:/data:ro
+    command:
+      # load *all* JSON files found in /data
+      - "--data" "/data"
+      # optional: watch for changes and auto-reload
+      - "--watch"
+      # optional: make sure old files are auto-upgraded
+      - "--repair"
+    ports:
+      # expose each environment’s own port
+      - "3001:3001"
+      - "3002:3002"
+      - "3003:3003"
+
+```
+Now, your Spring-Boot app (or Postman, etc.) calls:
+- http://localhost:3001/... for Customers
+- http://localhost:3002/... for Inventory
+- http://localhost:3003/... for Payments
+
+#### Seperate container approach (same or overlapping ports)
+
+**Advantages:** Each environment can run on the same port number inside its own container (if you ever need that). You can turn individual mocks on/off with docker compose up mockoon-inventory.
+
+**Downside:** a bit more YAML to maintain.
+
+```yaml
+services:
+  mockoon-customers:
+    image: mockoon/cli:latest
+    volumes:
+      - ./mockoon/customers.json:/data/env.json:ro
+    command: ["--data", "/data/env.json", "--port", "8080"]
+    ports:
+      - "8080:8080"
+
+  mockoon-inventory:
+    image: mockoon/cli:latest
+    volumes:
+      - ./mockoon/inventory.json:/data/env.json:ro
+    command: ["--data", "/data/env.json", "--port", "8081"]
+    ports:
+      - "8081:8081"
+
+```
+
+#### Handy CLI flags
+
+| Flag                 | Purpose                                                                       |
+| -------------------- | ----------------------------------------------------------------------------- |
+| `--watch`            | Auto-reload when you edit the JSON on disk. Great for live tweaking.          |
+| `--repair`           | Quietly migrate any “too old” env file on startup (avoids the yes/no prompt). |
+| `--log-transaction`  | Prints every incoming request/response to the container logs.                 |
+| `--data base folder` | If you point to a folder, **all `*.json` files** inside are loaded.           |
+
+#### Organising inside a single env file (fallback)
+
+If you must stick to one file per service but still want order, the Mockoon GUI lets you create folders to group routes, give them colours, collapse/expand, etc. Those folders carry over to the CLI automatically.
+
 #### Auto-repair
 
 If your JSON is in Mockoon ≤ v1.x format (it still has the legacy "type": "environment" / "version": "3.4.0" duo and no lastMigration field), add the `--repair` to the command. This should attempt to make a fix without the yes/no prompt that will break your `docker compose` command. However, a re-export is recommended.
