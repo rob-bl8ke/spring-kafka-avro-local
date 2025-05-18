@@ -108,3 +108,22 @@ However, this shouldn't be a problem since the final solution relies on swapping
 
 The alternative is to keep it String and manually `Class.forName()` in your config code later. A consideration if the current change is not desirable.
 
+### Mockoon
+
+```bash
+docker compose up -d
+curl http://localhost:3001/hello
+# → {"message":"Hello from Mockoon!"}
+```
+
+#### Auto-repair
+
+If your JSON is in Mockoon ≤ v1.x format (it still has the legacy "type": "environment" / "version": "3.4.0" duo and no lastMigration field), add the `--repair` to the command. This should attempt to make a fix without the yes/no prompt that will break your `docker compose` command. However, a re-export is recommended.
+
+```yaml
+command:
+  - "--data" "/data/mockoon-env.json"
+  - "--port" "3001"
+  - "--repair"          # migrate without the yes/no prompt
+```
+

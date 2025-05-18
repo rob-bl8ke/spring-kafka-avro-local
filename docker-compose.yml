@@ -42,5 +42,15 @@ services:
     networks:
       - kafka-network
 
+  mockoon:
+    image: mockoon/cli:latest
+    container_name: mockoon
+    volumes:
+      - ./mockoon/mockoon-env.json:/data/mockoon-env.json:ro
+    command: >
+      --data /data/mockoon-env.json
+      --port 3001
+    ports:
+      - "3001:3001"
 networks:
   kafka-network:
