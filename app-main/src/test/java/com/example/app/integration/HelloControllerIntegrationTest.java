@@ -1,4 +1,4 @@
-package com.example.app;
+package com.example.app.integration;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -11,6 +11,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.cyg.kafkacore.HelloWorldService;
+import com.example.app.HelloController;
 import com.example.app.kafka.ClientProducer;
 
 import static org.mockito.BDDMockito.given;
