@@ -16,7 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Configuration
-@Profile("local")
+@Profile({"local", "test"})
 public class LocalKafkaAdminConfig implements KafkaAdminConfigInterface  {
     
     private final LocalConfig config;

@@ -8,7 +8,7 @@ import lombok.Data;
 
 @Configuration
 @Data
-@Profile("local")
+@Profile({"local", "test"})
 public class LocalConfig {
     @Value("${spring.kafka.bootstrap-servers}")
     private String bootstrapServers;

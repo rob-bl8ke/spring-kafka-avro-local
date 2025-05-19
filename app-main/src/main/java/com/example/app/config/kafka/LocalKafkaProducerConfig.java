@@ -19,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Configuration
-@Profile("local")
+@Profile({"local", "test"})
 @ConditionalOnProperty(value = "kafka.producer.enabled", havingValue = "true")
 public class LocalKafkaProducerConfig implements KafkaProducerConfigInterface {
     private final LocalConfig config;
