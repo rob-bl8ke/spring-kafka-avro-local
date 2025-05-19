@@ -1,0 +1,32 @@
+
+server:
+  port: 8090
+
+spring:
+  application:
+    name: app-main
+  kafka:
+    bootstrap-servers: ${spring.embedded.kafka.brokers}
+    producer:
+      keySerializer: org.apache.kafka.common.serialization.StringSerializer
+      valueSerializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+    properties:
+      schema-registry-url: http://localhost:8091
+
+kafka:
+  producer:
+    enabled: true
+  context-topic:
+    name: context-topic
+    partitions: 1
+    replicas: 1
+  producers:
+    something-happened:
+      topic: context-topic
+      event-type: SomethingHappened
+      schema-id: com_cyg_something_happened
+
+executor:
+  max:
+    queue:
+      size: 1000

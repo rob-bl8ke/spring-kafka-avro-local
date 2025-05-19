@@ -68,6 +68,11 @@
             <version>1.0.5</version>
         </dependency>
 
+		<dependency>
+			<groupId>org.springframework.kafka</groupId>
+			<artifactId>spring-kafka</artifactId>
+		</dependency>
+        
         <!-- Spring Boot Test support -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -100,6 +105,19 @@
             <artifactId>kafka-avro-serializer</artifactId>
             <version>7.5.0</version>
         </dependency>
+		<dependency>
+			<groupId>org.springframework.kafka</groupId>
+			<artifactId>spring-kafka-test</artifactId>
+            <version>3.3.5</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.awaitility</groupId>
+			<artifactId>awaitility</artifactId>
+			<version>4.2.2</version>
+			<scope>test</scope>
+		</dependency>
+
     </dependencies>
 
     <build>
